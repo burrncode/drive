@@ -5,20 +5,19 @@ class Search extends MY_Controller
 
     function __construct() {
         parent::__construct();
+/*
 
-
-        /*if (!$this->loggedIn) {
+        if (!$this->loggedIn) {
             redirect('login');
-        }*/
-
+        }
+*/
         $this->load->library('form_validation');
         //$this->load->model('search_model');
     }
 
     public function index()
     {
-    	echo 'Try mate! This is just a start.';
-                    $this->load->view($this->theme.'auth/login', $this->data);
-
+        $this->data['page_title'] = "Seach Trip";
+        $this->page_construct('categories/add', $this->data);
     }
 }

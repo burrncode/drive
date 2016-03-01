@@ -117,6 +117,12 @@
     .calendar .cl_right { width: 100%; float: none; }
 }
 
+@media (min-width: 767px) {
+    .min-height {
+        min-height: 620px;
+    }
+}
+
 .pos {
     min-width: 1020px !important;
 }
@@ -497,4 +503,42 @@
 }
 .ui-keyboard .ui-keyboard-cancel:hover {
     background-color: #d73925;
+}
+
+.copyright {
+    border-top: 1px solid rgb(68, 68, 68);
+    margin-top: 20px;
+    padding-top: 12px;
+    color: rgb(153, 153, 153);
+}
+
+.bg-color {
+    background-color: #fff !important;
+}
+
+footer {
+    background:none repeat scroll 0 0 #34495e;
+    padding-top: 2em;
+}
+
+.spacer-10 {
+    margin: 5em 0;
+}
+
+.top-margin40 {
+    margin-top: 40px;
+}
+.offer-container .fa-blue {
+    color: #269abc;
+}
+
+.offer-container .input-icon {
+    position: absolute;
+    font-size: 1.2em;
+    top: 12px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: #999;
 }

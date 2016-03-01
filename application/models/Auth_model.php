@@ -1271,6 +1271,19 @@ class Auth_model extends CI_Model {
         return FALSE;
     }
 
+    public function create_user($data)
+    {
+        $this->db->insert($this->tables['users'], $data);
+        $user_id = $this->db->insert_id();
+
+        if ($user_id) {
+            return $user_id;
+        } else {
+            return false;
+        }
+
+    }
+
     public function create_group($group_name = FALSE, $group_description = '', $additional_data = array()) {
         // bail if the group name was not passed
         if (!$group_name) {

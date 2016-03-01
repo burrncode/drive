@@ -11,10 +11,10 @@
     <link href="<?= $assets ?>plugins/iCheck/square/green.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="login-page">
-    Are we
+
     <div class="login-box">
         <div class="login-logo">
-            <a href="<?=base_url();?>"><?= $Settings->site_name == 'SimplePOS' ? 'Simple<b>POS</b>' : '<img src="'.base_url('uplaods/'.$Settings->logo).'" alt="'.$Settings->site_name.'" />'; ?></a>
+            <a href="<?=base_url();?>"><?= $Settings->site_name == 'SimplePOS' ? 'Simple<b>POS</b>' : '<img src="'.base_url('assets/uplaods/'.$Settings->logo).'" alt="'.$Settings->site_name.'" />'; ?></a>
         </div>
         <div class="login-box-body">
             <?php if($error)  { ?>
@@ -28,6 +28,7 @@
                 <?= $message; ?>
             </div>
             <?php } ?>
+
             <p class="login-box-msg"><?= lang('login_to_your_account'); ?></p>
             <?= form_open("auth/login"); ?>
             <div class="form-group has-feedback">

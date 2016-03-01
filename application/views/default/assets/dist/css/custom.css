@@ -498,3 +498,14 @@
 .ui-keyboard .ui-keyboard-cancel:hover {
     background-color: #d73925;
 }
+
+.copyright {
+    border-top: 1px solid rgb(68, 68, 68);
+    margin-top: 20px;
+    padding-top: 12px;
+    color: rgb(153, 153, 153);
+}
+
+.top-margin40 {
+    margin-top: 40px;
+}

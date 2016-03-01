@@ -39,10 +39,7 @@ class Auth extends MY_Controller {
     }
 
     function profile($id = NULL) {
-        if (!$this->ion_auth->logged_in() || !$this->Admin && $id != $this->session->userdata('user_id')) {
-            $this->session->set_flashdata('warning', lang("access_denied"));
-            redirect($_SERVER["HTTP_REFERER"]);
-        }
+
         if (!$id || empty($id)) {
             redirect('auth');
         }
@@ -124,6 +121,9 @@ class Auth extends MY_Controller {
 
     //log the user in
     function login($m = NULL) {
+               
+        $this->form_validation->set_rules('identity', lang('identity'), 'required');
+        $this->form_validation->set_rules('password', lang('password'), 'required');
 
         if($this->Settings->captcha) {
             $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_captcha_check');
@@ -152,6 +152,7 @@ class Auth extends MY_Controller {
 
             $this->data['error'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('error');
             $this->data['message'] = $this->session->flashdata('message');
+
             if($this->Settings->captcha) {
                 $this->load->helper('captcha');
                 $vals = array(
@@ -179,7 +180,7 @@ class Auth extends MY_Controller {
                     );
             }
             $this->data['page_title'] = lang('login');
-            $this->load->view($this->theme.'auth/login', $this->data);
+            $this->page_construct('auth/login', $this->data);
         }
     }
 
@@ -394,6 +395,45 @@ function deactivate($id = NULL) {
         }
 
         redirect($_SERVER["HTTP_REFERER"]);
+    }
+}
+
+function signup() 
+{
+
+    $this->data['title'] = lang('add_user');
+    $this->form_validation->set_rules('username', lang("username"), 'trim|is_unique[users.username]');
+    $this->form_validation->set_rules('email', lang("email"), 'trim|is_unique[users.email]');
+    $this->form_validation->set_rules('phone', lang("phone"), 'trim|required');
+    $this->form_validation->set_rules('username', lang("username"), 'trim|is_unique[users.username]');
+    $this->form_validation->set_rules('email', lang("email"), 'trim|valid_email');
+    $this->form_validation->set_rules('password', lang("password"), 'required');
+
+    if ($this->form_validation->run() == true) {
+
+        $username = strtolower($this->input->post('username'));
+        $email = strtolower($this->input->post('email'));
+        $password = $this->input->post('password');
+        
+        $additional_data = array(
+            'first_name' => $this->input->post('first_name'),
+            'last_name' => $this->input->post('last_name'),
+            'phone' => $this->input->post('phone'),
+            'gender' => $this->input->post('gender'),
+            'group_id' => $this->input->post('group') ? $this->input->post('group') : '2',
+            );
+
+    }
+    if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, 1)) {
+        $this->session->set_flashdata('message', $this->ion_auth->messages());
+        redirect("auth/users");
+    } else {
+        echo "tet";
+        $this->data['error'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('error')));
+        $this->data['page_title'] = lang('add_user');
+        $bc = array(array('link' => site_url('users'), 'page' => lang('users')), array('link' => '#', 'page' => lang('add_user')));
+        $meta = array('page_title' => lang('add_user'), 'bc' => $bc);
+        $this->page_construct('auth/signup', $this->data, $meta);
     }
 }
 
